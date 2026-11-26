@@ -70,6 +70,10 @@ body{font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;font-size:14px}
 .course-nav-link:hover{background:var(--surface);border-color:var(--line);transform:translateX(3px)}
 .course-nav-link.active{background:var(--surface);border-color:#a8d2e5;box-shadow:0 5px 14px rgba(62,97,115,.07)}
 .course-nav-link>span:first-child{width:27px;height:27px;flex:none;border-radius:9px;background:var(--butter);color:#9b6941;display:grid;place-items:center;font-size:17px}
+.course-icon-svg{display:block;width:19px;height:19px;flex:none;color:#a76c39}
+.course-nav-link>span:first-child .course-icon-svg{width:19px;height:19px}
+.course-tile-icon .course-icon-svg{width:28px;height:28px}
+.course-tile-icon:has(.course-icon-svg){background:var(--butter);color:#a76c39}
 .course-nav-link>span:nth-child(2){flex:1}
 .course-nav-link b{color:var(--peach);font-size:17px}
 .add-course{border-color:#d49d7d;color:#a95335;background:var(--surface);font-family:"Trebuchet MS",Arial,sans-serif;letter-spacing:.05em;font-size:11px}
@@ -149,3 +153,28 @@ body{font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;font-size:14px}
 :root[data-theme=dark] .feature-card.lilac .feature-icon,:root[data-theme=dark] .feature-card.lilac em{color:#b9e9fa}
 :root[data-theme=dark] .feature-card.mint .feature-icon,:root[data-theme=dark] .feature-card.mint em{color:#bee9c8}
 :root[data-theme=dark] .feature-card.butter .feature-icon,:root[data-theme=dark] .feature-card.butter em{color:#ffe2a0}
+.course-nav-item{display:grid;gap:2px}
+.course-nav-actions{display:flex;gap:5px;padding:0 6px 7px 47px}
+.course-manage-button{border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--plum-deep);padding:6px 10px;font-size:11px;font-weight:800;min-height:30px;transition:background .2s,transform .2s}
+.course-manage-button:hover{background:var(--butter);transform:translateY(-1px)}
+.course-manage-button.delete{color:#ab604f}
+.course-manage-button.delete:hover{background:var(--peach-pale)}
+.course-tile-frame{display:flex;flex-direction:column;min-width:0;border:1px solid var(--line);border-radius:21px;background:var(--surface);overflow:hidden}
+.course-tile-frame>.course-tile{border:0;border-radius:0;min-height:145px;flex:1}
+.course-tile-actions{display:flex;gap:7px;padding:0 17px 15px 89px}
+.empty-actions{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap}
+.empty-actions .course-manage-button{min-height:39px;padding:9px 13px}
+.button.danger{background:#b85f59;color:#fff}
+.button.danger:hover{background:#9f4f4b}
+@media(max-width:560px){.course-nav-actions{padding-left:46px}.course-manage-button{min-height:38px;padding:8px 12px}.course-tile-actions{padding-left:16px}.empty-actions .button{width:100%}}
+.ui-svg{display:block;width:1em;height:1em;flex:none}
+.brand-flower .ui-svg{width:25px;height:25px}
+.sidebar-toggle .ui-svg{width:23px;height:23px}
+.theme-symbol .ui-svg{width:17px;height:17px}
+.feature-icon .ui-svg{width:29px;height:29px}
+.spark .ui-svg{width:18px;height:18px}
+.exam-emblem .ui-svg{width:43px;height:43px}
+.empty-card>span .ui-svg{width:45px;height:45px;margin:auto}
+.note-appendix>summary>span .ui-svg{width:19px;height:19px}
+.remember>span .ui-svg{width:23px;height:23px}
+.modal-flower .ui-svg{width:39px;height:39px}
