@@ -187,3 +187,37 @@ body{font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;font-size:14px}
 .note-appendix>summary>span .ui-svg{width:19px;height:19px}
 .remember>span .ui-svg{width:23px;height:23px}
 .modal-flower .ui-svg{width:39px;height:39px}
+@font-face{font-family:"Patrick Hand";src:url("assets/fonts/PatrickHand-Regular.ttf") format("truetype");font-display:swap}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.annotation-switch{display:flex;align-items:center;gap:7px;flex:none;min-height:50px;border:2px solid #d8b8c9;border-radius:13px;padding:6px 12px 6px 8px;background:var(--surface);color:var(--plum-deep);font-family:"Trebuchet MS",Arial,sans-serif;font-size:11px;font-weight:900;letter-spacing:.04em;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s}
+.annotation-switch:hover{transform:rotate(2deg) translateY(-2px)}
+.annotation-switch.active{background:#fbeaf0;border-color:#d995ad;box-shadow:0 0 0 3px rgba(235,164,188,.2)}
+.annotation-switch svg{width:29px;height:29px;flex:none}
+.highlight-toolbar .annotation-switch span{color:inherit;font-size:11px;white-space:nowrap}
+.annotation-panel{max-width:900px;margin:0 0 18px;padding:23px;border:1px solid #e8cdd7;border-radius:20px;background:linear-gradient(135deg,#fff9f5,#fff1f5 70%,#f3f8fa);box-shadow:var(--shadow);animation:pageIn .25s ease both}
+.annotation-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin-bottom:18px}
+.annotation-heading h2{font:normal 31px/1.1 "Patrick Hand","Segoe Print",cursive;color:#604a63;margin:5px 0 5px}
+.annotation-heading p{color:#604f62;line-height:1.5;margin:0}
+.annotation-heading .note-add{background:#e9b8c7;color:#342b3d;white-space:nowrap}
+.annotation-heading .note-add:hover{background:#e2a6b9}
+.annotation-empty{font:normal 21px/1.4 "Patrick Hand","Segoe Print",cursive;color:#674e65;margin:0;padding:12px 0}
+.annotation-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,285px),1fr));gap:14px}
+.annotation-card{min-width:0;padding:14px 15px;border:1px solid #e7d2b3;border-radius:13px;background:#fff8df;box-shadow:0 7px 18px rgba(100,73,64,.07);transition:transform .2s,box-shadow .2s}
+.annotation-card:hover{transform:translateY(-2px);box-shadow:0 11px 21px rgba(100,73,64,.11)}
+.annotation-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
+.annotation-card-top span{font-size:10px;font-weight:900;letter-spacing:.13em;color:#8b576d}
+.annotation-card-top button{border:0;border-radius:7px;background:transparent;color:#9a4d59;font-size:11px;font-weight:800;padding:6px 7px}
+.annotation-card-top button:hover{background:#f5e4d1}
+.annotation-card textarea{display:block;width:100%;min-height:130px;resize:vertical;border:0;border-radius:6px;padding:5px 7px;background:repeating-linear-gradient(to bottom,transparent 0,transparent 29px,#e5d7c3 30px);color:#3e3650;font:normal 21px/30px "Patrick Hand","Segoe Print",cursive;letter-spacing:.01em;outline-offset:2px}
+.annotation-card textarea::placeholder{color:#877a85;opacity:1}
+.annotation-card textarea:focus-visible{outline:3px solid #d995ad;outline-offset:2px}
+.annotation-card small{display:block;text-align:right;color:#66566c;font-size:11px;font-weight:700;margin-top:9px}
+:root[data-theme=dark] .annotation-panel{background:linear-gradient(135deg,#38313c,#393641 65%,#303f46);border-color:#685264}
+:root[data-theme=dark] .annotation-heading h2,:root[data-theme=dark] .annotation-heading p,:root[data-theme=dark] .annotation-empty{color:#f6e3ee}
+:root[data-theme=dark] .annotation-switch.active{background:#553c4a;border-color:#e3afc1;color:#fff1f6}
+:root[data-theme=dark] .annotation-card{background:#403b36;border-color:#796a55}
+:root[data-theme=dark] .annotation-card textarea{color:#fff1de;background:repeating-linear-gradient(to bottom,transparent 0,transparent 29px,#61584d 30px)}
+:root[data-theme=dark] .annotation-card textarea::placeholder,:root[data-theme=dark] .annotation-card small{color:#dfd0c5}
+:root[data-theme=dark] .annotation-card-top span{color:#f2c0d0}
+:root[data-theme=dark] .annotation-card-top button{color:#ffc3ce}
+@media(max-width:560px){.highlight-toolbar .highlighter-switch{font-size:10px;padding-right:8px}.annotation-switch{font-size:10px;padding-right:8px}.highlight-toolbar .annotation-switch span{font-size:10px}.annotation-switch svg{width:25px;height:25px}.annotation-panel{padding:18px}.annotation-heading{flex-wrap:wrap}.annotation-heading h2{font-size:29px}.annotation-heading .note-add{width:100%}.annotation-card textarea{font-size:21px}}
