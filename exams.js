@@ -103,11 +103,30 @@ const examRows = `
 4|What feedback should a database app give after a failed save?|A useful user message while retaining diagnostic details for developers|A raw stack trace as the only message|No message at all|Always claim success|The module emphasizes clear feedback and reliable error handling.
 `;
 
-const allExamQuestions = examRows.trim().split('\n').map((row, i) => {
+const originalExamQuestions = examRows.trim().split('\n').map((row, i) => {
   const [summative, prompt, correct, ...tail] = row.split('|');
   const explanation = tail.pop();
-  return {id:i+1, summative:Number(summative), prompt, choices:[correct,...tail], correct:0, explanation};
+  const id=i+1;
+  const module=id<=13?1:id<=25?2:id<=38?3:id<=50?4:id<=65?5:id<=75?6:id<=87?7:8;
+  return {id, module, summative:Number(summative), prompt, choices:[correct,...tail], correct:0, explanation};
 });
+// The extra bank is narrowed to the distinct, high-yield items for each 100-item mock exam.
+const extraSelection = {
+  3: new Set([2,3,4,5,7,8,9,15,16,17,18,23,30,31,33,34,35,36,38,41,44,45,46,47,50]),
+  4: new Set([1,3,4,5,6,7,10,11,12,13,15,16,23,26,27,29,32,33,34,35,37,40,41,43,44])
+};
+const extraRowPosition = {1:0,2:0,3:0,4:0};
+const selectedExtraRows = extraExamRows.trim().split('\n').filter(row => {
+  const summative = Number(row.split('|')[1]);
+  extraRowPosition[summative]++;
+  return summative <= 2 || extraSelection[summative].has(extraRowPosition[summative]);
+});
+const addedExamQuestions = selectedExtraRows.map((row, i) => {
+  const [module, summative, prompt, correct, ...tail] = row.split('|');
+  const explanation = tail.pop();
+  return {id:originalExamQuestions.length+i+1, module:Number(module), summative:Number(summative), prompt, choices:[correct,...tail], correct:0, explanation};
+});
+const allExamQuestions = [...originalExamQuestions, ...addedExamQuestions];
 
 const examSets = [
   {id:'exam-a',title:'Modules 1–4',subtitle:'Summatives 1 & 2',summatives:[1,2],accent:'peach'},

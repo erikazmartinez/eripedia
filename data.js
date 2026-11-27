@@ -1,5 +1,5 @@
 const courseData = {
-  id: 'oop', title: 'Object-Oriented Programming', short: 'OOP', icon: '✳',
+  id: 'oop', title: 'Object-Oriented Programming', short: 'OOP', icon: 'course-asterisk',
   description: 'Java concepts, clear examples, flashcards, and two 100-point practice exams.',
   modules: [
     {id:1,title:'Java foundations',tag:'Start here',source:'Modules 1–4 summary, pp. 1–3',topics:[

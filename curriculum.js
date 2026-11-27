@@ -133,6 +133,67 @@ const cardReplacements = {
   'CREATE / INSERT':[['INSERT','The SQL operation that adds a database record.']],
   'READ / SELECT':[['SELECT','The SQL operation that retrieves database records.']]
 };
+// Small exam-focused additions from the four summatives and both uploaded reviewers.
+const topic = (moduleId, index) => courseData.modules[moduleId-1].topics[index];
+topic(1,1).points.push(
+  ['jar tool','Packages compiled classes and resources into a Java archive.'],
+  ['jdb tool','The JDK debugger used to inspect Java execution.'],
+  ['Project language level','The Java version selected for a project; it must support the syntax used by the source.'],
+  ['NetBeans and JDeveloper','NetBeans supports general Java project work; JDeveloper supports Oracle-oriented application and object design work.']
+);
+topic(1,2).points.push(
+  ['Step Into','Enter a called method to inspect its lines.'],
+  ['Step Over','Run a call without entering the called method.'],
+  ['Step Out','Finish the current method and return to its caller.']
+);
+topic(1,2).tip='A successful build checks syntax and types; test the output against the actual requirement.';
+topic(2,4).points.push(
+  ['String length()','Returns the number of characters in a String.'],
+  ['String charAt(index)','Returns the character at a zero-based position.'],
+  ['Scanner next() and nextLine()','next() reads one word; nextLine() reads a complete line, including spaces.'],
+  ['Scanner nextInt() and nextDouble()','Read an integer or decimal value from console input.']
+);
+topic(2,5).points.push(
+  ['void','A method return type meaning no value is sent back to the caller.'],
+  ['return','Ends a method and, for a non-void method, sends its result to the caller.']
+);
+topic(3,2).points.push(
+  ['Relationship class','A separate object for data belonging to a link, such as an Enrollment date and grade between Student and Course.']
+);
+topic(4,2).points.push(
+  ['Interface implementation','A concrete class uses implements and supplies the required operations; it can implement more than one interface.']
+);
+topic(5,3).points.push(
+  ['NullPointerException','Happens when code uses a null reference as an object.'],
+  ['NumberFormatException','Happens when text cannot be parsed as the requested number.'],
+  ['ArrayIndexOutOfBoundsException','Happens when an array index is outside its valid positions.'],
+  ['ArithmeticException','Can happen during invalid integer arithmetic, such as dividing by zero.']
+);
+topic(5,4).points.push(
+  ['Catch order','Catch a specific exception subtype before a more general parent type.']
+);
+topic(6,1).points.push(
+  ['Iterator.hasNext()','Checks whether another element exists.'],
+  ['Iterator.next()','Returns the next element and advances the cursor.'],
+  ['Iterator.remove()','Removes the last returned element when removal is supported.']
+);
+topic(6,2).points.push(
+  ['Linear search','Checks items one by one and does not require sorted input.']
+);
+topic(7,3).points.push(
+  ['Event Dispatch Thread','The Swing thread on which interface work should generally run.'],
+  ['JRadioButton with ButtonGroup','A group of radio buttons allows exactly one selected choice.'],
+  ['JTextField and JTextArea','A text field holds one line; a text area holds multiple lines.']
+);
+topic(8,2).points.push(
+  ['Primary key','A field that uniquely identifies a record.'],
+  ['Foreign key','A field that links a record to a related table record.']
+);
+topic(8,3).points.push(
+  ['Parameter index','PreparedStatement placeholder positions start at one.'],
+  ['executeQuery()','Runs a SELECT and returns a ResultSet.'],
+  ['executeUpdate()','Runs a data-changing statement and returns the affected-row count.']
+);
 flashcards = courseData.modules.flatMap(module=>module.topics.flatMap(topic=>topic.points.flatMap(([term,definition])=>{
   const replacement=cardReplacements[term];
   return (replacement||[[term,definition]]).map(([front,back])=>({module:module.id,term:front,definition:back}));
