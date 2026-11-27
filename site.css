@@ -221,3 +221,52 @@ body{font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;font-size:14px}
 :root[data-theme=dark] .annotation-card-top span{color:#f2c0d0}
 :root[data-theme=dark] .annotation-card-top button{color:#ffc3ce}
 @media(max-width:560px){.highlight-toolbar .highlighter-switch{font-size:10px;padding-right:8px}.annotation-switch{font-size:10px;padding-right:8px}.highlight-toolbar .annotation-switch span{font-size:10px}.annotation-switch svg{width:25px;height:25px}.annotation-panel{padding:18px}.annotation-heading{flex-wrap:wrap}.annotation-heading h2{font-size:29px}.annotation-heading .note-add{width:100%}.annotation-card textarea{font-size:21px}}
+.flash-self-grade{display:flex;align-items:center;gap:8px;flex-wrap:wrap;max-width:750px;padding:13px 0 3px;color:var(--muted);font-size:12px;font-weight:750}
+.flash-self-grade>span{margin-right:auto}
+.flash-self-grade .button{padding:10px 14px}
+.flash-self-grade .selected-review{background:var(--peach-pale);border:1px solid var(--peach);color:var(--ink)}
+.flash-self-grade .selected-knew{background:var(--sage-pale);border:1px solid var(--sage);color:var(--ink)}
+.button.finish-flash{background:#347d99;color:#fff;box-shadow:0 5px 15px rgba(52,125,153,.18)}
+.button.finish-flash:hover{background:#276b86}
+.flash-result-hero{position:relative;overflow:hidden;max-width:900px;min-height:242px;display:flex;align-items:center;justify-content:space-between;gap:25px;padding:33px;border-radius:25px;border:1px solid #edd7d8;background:linear-gradient(115deg,#fde9e8,#fff4d8 53%,#e4f2f7);box-shadow:var(--shadow)}
+.flash-result-copy,.flash-result-score{position:relative;z-index:1}
+.flash-result-copy h1{font-family:"Trebuchet MS",Arial,sans-serif;font-size:clamp(30px,4vw,46px);line-height:1.12;letter-spacing:.025em;color:#493c56;margin:11px 0}
+.flash-result-copy p{font-size:14px;line-height:1.5;color:#604f60;max-width:390px;margin:0}
+.flash-result-score{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;width:175px;height:175px;border-radius:50%;border:2px solid #eccbd7;background:#fffdfa;color:#4a5265;text-align:center;box-shadow:0 12px 22px rgba(83,64,80,.08)}
+.flash-result-score strong{font-family:Georgia,serif;font-size:45px;line-height:1;color:#6c547c}
+.flash-result-score span{font-size:11px;font-weight:800;margin-top:9px}
+.flash-confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.flash-confetti i{position:absolute;left:var(--x);top:-22px;width:9px;height:15px;border-radius:3px;background:var(--c);animation:confettiFall 3.5s ease-in var(--d) both}
+.flash-confetti i:nth-child(3n){width:11px;height:11px;border-radius:50%}
+@keyframes confettiFall{0%{opacity:0;transform:translateY(-25px) rotate(0)}12%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translateY(340px) rotate(var(--r))}}
+.flash-result-summary{max-width:900px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:17px 0}
+.flash-result-summary>div{display:flex;flex-direction:column;align-items:center;gap:4px;border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--surface);text-align:center}
+.flash-result-summary strong{font:900 24px/1 Georgia,serif;color:var(--plum-deep)}
+.flash-result-summary span{font-size:11px;color:var(--muted);font-weight:750}
+.flash-result-actions{display:flex;flex-wrap:wrap;gap:9px;max-width:900px;margin:18px 0 32px}
+.flash-result-actions .button.soft{color:var(--ink);border:1px solid var(--sage)}
+.flash-mistakes,.flash-history{max-width:900px;margin-top:30px}
+.flash-mistakes h2,.flash-history h2{font-family:"Trebuchet MS",Arial,sans-serif;font-size:20px;letter-spacing:.045em;color:var(--ink);margin-bottom:15px}
+.flash-mistake{border:1px solid var(--line);border-left:5px solid #e6a8ba;border-radius:13px;background:var(--surface);padding:17px 20px;margin:10px 0}
+.flash-mistake>span{font-size:10px;font-weight:900;letter-spacing:.12em;color:var(--peach)}
+.flash-mistake h3{font-size:17px;line-height:1.4;margin:8px 0 12px}
+.flash-mistake p{font-size:12px;color:var(--muted);line-height:1.5;margin:5px 0}
+.flash-mistake p strong{color:var(--ink)}
+.flash-all-correct{border-radius:13px;padding:20px;background:var(--sage-pale);color:var(--ink)}
+.flash-history>div{display:grid;gap:8px}
+.flash-history button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);padding:13px 16px;text-align:left;font-size:12px;transition:transform .2s,border-color .2s}
+.flash-history button:hover{transform:translateY(-2px);border-color:var(--plum)}
+.flash-history button strong{font-size:15px;color:var(--plum-deep)}
+.flash-history button span:last-child{color:var(--peach);font-weight:850}
+:root[data-theme=dark] .flash-result-hero{border-color:#604e56;background:linear-gradient(115deg,#493c4b,#544e3d 54%,#304b59)}
+:root[data-theme=dark] .flash-result-copy h1,:root[data-theme=dark] .flash-result-copy p{color:var(--ink)}
+:root[data-theme=dark] .flash-result-score{background:#30313a;border-color:#a88ba4;color:var(--ink)}
+:root[data-theme=dark] .flash-result-score strong{color:#f4d5eb}
+@media(max-width:560px){.flash-control-row{gap:8px}.flash-control-row .finish-flash{flex:1}.flash-self-grade{gap:7px}.flash-self-grade>span{flex-basis:100%}.flash-result-hero{flex-direction:column;align-items:flex-start;padding:25px;gap:20px}.flash-result-score{width:135px;height:135px;align-self:center}.flash-result-score strong{font-size:37px}.flash-result-summary{gap:6px}.flash-result-summary>div{padding:12px 6px}.flash-result-summary strong{font-size:20px}.flash-result-summary span{font-size:10px}.flash-result-actions .button{flex:1;min-width:140px}.flash-history button{flex-wrap:wrap}.flash-history button span:last-child{margin-left:auto}}
+.shuffle-flash{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:43px;border:2px solid #a7d3e6;border-radius:12px;background:#eaf6fb;color:#2c6079;padding:9px 13px;font-size:11px;font-weight:900;letter-spacing:.04em;transition:transform .2s,background .2s,border-color .2s}
+.shuffle-flash:hover{transform:translateY(-2px);background:#d9eff8}
+.shuffle-flash.active{background:#d3ebf6;border-color:#5ba4c6;color:#234e68}
+.shuffle-flash svg{width:19px;height:19px;flex:none}
+:root[data-theme=dark] .shuffle-flash{background:#2c4756;border-color:#5b91a8;color:#e0f4fc}
+:root[data-theme=dark] .shuffle-flash.active{background:#36576a;border-color:#88c7e3}
+@media(max-width:560px){.shuffle-flash{width:100%}}
