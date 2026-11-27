@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-sidebar="closed">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,13 +11,14 @@
 </head>
 <body>
   <div class="app-shell">
-    <aside class="sidebar" id="course-sidebar" aria-label="Course list">
+    <aside class="sidebar" id="course-sidebar" aria-label="Course list" inert>
       <div class="sidebar-head"><span>MY COURSES</span><button id="sidebar-close" type="button" aria-label="Close course list">×</button></div>
       <nav id="main-nav" class="course-nav" aria-label="Courses"></nav>
       <button id="add-course" class="add-course" type="button">+ <span>ADD A COURSE</span></button>
     </aside>
+    <button class="sidebar-backdrop" id="sidebar-backdrop" type="button" aria-label="Close course list" tabindex="-1"></button>
     <div class="main-area">
-      <header class="topbar"><div class="topbar-row"><button id="sidebar-toggle" class="sidebar-toggle" type="button" aria-controls="course-sidebar" aria-expanded="true" aria-label="Show course list"><span></span></button><button class="brand" data-go="dashboard" aria-label="Eripedia dashboard"><span class="brand-flower" aria-hidden="true"><svg class="ui-svg" viewBox="0 0 32 32" focusable="false"><g fill="currentColor"><ellipse cx="16" cy="7" rx="4" ry="7"/><ellipse cx="16" cy="25" rx="4" ry="7"/><ellipse cx="7" cy="16" rx="7" ry="4"/><ellipse cx="25" cy="16" rx="7" ry="4"/></g><circle cx="16" cy="16" r="4" fill="#ffe3a4"/></svg></span><span class="brand-text"><strong>eripedia</strong><small>your study garden</small></span></button><div class="top-actions"><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode"><span class="theme-symbol"></span><span class="theme-label">Dark mode</span></button></div></div><nav id="primary-nav" class="primary-nav" aria-label="Study sections"></nav></header>
+      <header class="topbar"><div class="topbar-row"><button id="sidebar-toggle" class="sidebar-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false" aria-label="Show course list"><span></span></button><button class="brand" data-go="dashboard" aria-label="Eripedia dashboard"><span class="brand-flower" aria-hidden="true"><svg class="ui-svg" viewBox="0 0 32 32" focusable="false"><g fill="currentColor"><ellipse cx="16" cy="7" rx="4" ry="7"/><ellipse cx="16" cy="25" rx="4" ry="7"/><ellipse cx="7" cy="16" rx="7" ry="4"/><ellipse cx="25" cy="16" rx="7" ry="4"/></g><circle cx="16" cy="16" r="4" fill="#ffe3a4"/></svg></span><span class="brand-text"><strong>eripedia</strong><small>your study garden</small></span></button><div class="top-actions"><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode"><span class="theme-symbol"></span><span class="theme-label">Dark mode</span></button></div></div><nav id="primary-nav" class="primary-nav" aria-label="Study sections"></nav></header>
       <main id="main-content"></main>
     </div>
   </div>
