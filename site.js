@@ -151,7 +151,19 @@ function currentCard(){const deck=flashCards();return deck[Math.min(state.cardIn
 function flashRecordsForDeck(){return saved.flashRecords.filter(r=>r.course===state.course&&r.deckType===state.deckType&&r.deckModule===state.deckModule)}
 function shuffledKeys(keys){const result=[...keys];for(let i=result.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]]}return result}
 function startFlashSession(cardKeys=null,shuffled=false){const base=baseFlashCards(),available=cardKeys?base.filter(card=>cardKeys.includes(cardKey(card))):base;state.flashSession={course:state.course,deckType:state.deckType,deckModule:state.deckModule,mode:state.flashMode,orientation:state.orientation,cardKeys:cardKeys&&available.length?available.map(cardKey):null,cardOrder:shuffled?shuffledKeys(available.map(cardKey)):null,shuffled,answers:{}};state.cardIndex=0;state.flipped=false;state.flashFeedback=null;state.flashResult=null}
-function toggleFlashShuffle(){if(!state.flashSession)startFlashSession();const current=cardKey(currentCard()),session=state.flashSession;if(session.shuffled){session.shuffled=false;session.cardOrder=null}else{session.cardOrder=shuffledKeys(flashCards().map(cardKey));session.shuffled=true}state.cardIndex=Math.max(0,flashCards().findIndex(card=>cardKey(card)===current));state.flipped=false;state.flashFeedback=null;render()}
+function toggleFlashShuffle(){
+  if(!state.flashSession)startFlashSession();
+  const session=state.flashSession,deck=flashCards(),prefix=deck.slice(0,state.cardIndex+1).map(cardKey);
+  if(session.shuffled){
+    const seen=new Set(prefix),original=baseFlashCards().filter(card=>!session.cardKeys||session.cardKeys.includes(cardKey(card))).map(cardKey);
+    session.cardOrder=[...prefix,...original.filter(key=>!seen.has(key))];
+    session.shuffled=false;
+  }else{
+    session.cardOrder=[...prefix,...shuffledKeys(deck.slice(state.cardIndex+1).map(cardKey))];
+    session.shuffled=true;
+  }
+  render();
+}
 function recordFlashAnswer(card,correct,answer){if(!state.flashSession)startFlashSession();const key=cardKey(card);state.flashSession.answers[key]={correct,answer};if(correct)markMastered(card);else saved.mastered=saved.mastered.filter(item=>item!==key);persist()}
 function finishFlash(){const deck=flashCards(),answers=state.flashSession?.answers||{},missed=deck.filter(card=>!answers[cardKey(card)]?.correct).map(card=>({key:cardKey(card),term:card.term,definition:card.definition,answer:answers[cardKey(card)]?.answer||'Not answered'}));const record={id:`${Date.now()}-${Math.random().toString(36).slice(2,8)}`,at:Date.now(),course:state.course,deckType:state.deckType,deckModule:state.deckModule,mode:state.flashSession?.mode||state.flashMode,orientation:state.flashSession?.orientation||state.orientation,shuffled:!!state.flashSession?.shuffled,total:deck.length,correct:deck.length-missed.length,missed};saved.flashRecords=[record,...saved.flashRecords];persist();state.flashResult=record;state.flashSession=null;state.screen='flash-result';render();window.scrollTo(0,0)}
 function openFlashRecord(id){const record=saved.flashRecords.find(r=>r.id===id);if(!record)return;state.course=record.course;state.deckType=record.deckType;state.deckModule=record.deckModule;state.flashResult=record;state.flashSession=null;state.screen='flash-result';render();window.scrollTo(0,0)}
