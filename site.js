@@ -9,9 +9,21 @@ const saved={theme:'light',reviewed:oldData.reviewed||[],mastered:oldData.master
 delete saved.sidebarOpen;
 if(!saved.annotations||typeof saved.annotations!=='object'||Array.isArray(saved.annotations))saved.annotations={};
 if(!Array.isArray(saved.flashRecords))saved.flashRecords=[];
+if(!Array.isArray(saved.mastered))saved.mastered=[];
 if(!['yellow','blue','pink'].includes(saved.highlightColor))saved.highlightColor='yellow';
+const renamedNetworkingCards=[
+  [1,'Host or end device',['Host','End device']],[1,'Intranet and extranet',['Intranet','Extranet']],[1,'Integrity and availability',['Integrity','Availability']],
+  [2,'Shell and kernel',['Shell','Kernel']],[2,'CLI and GUI',['CLI','GUI']],[2,'Configuration mode',['Global configuration mode','Interface configuration mode','Line configuration mode']],[2,'Switch virtual interface (SVI)',['SVI']],
+  [3,'Throughput and goodput',['Throughput','Goodput']],[3,'EMI, RFI, and crosstalk',['EMI','RFI','Crosstalk']],[3,'UTP, STP, and fiber',['UTP','STP','Fiber-optic cable']],[3,'Half-duplex and full-duplex',['Half-duplex','Full-duplex']],
+  [4,'Time to Live / Hop Limit',['Time to Live (TTL)','Hop Limit']],[4,'ARP request and reply',['ARP request','ARP reply']],[4,'Router Solicitation and Advertisement',['Router Solicitation (RS)','Router Advertisement (RA)']],
+  [7,'DHCP discover-offer-request-ack',['Discover','Offer','Request','Acknowledgment']],[7,'POP3 and IMAP',['POP3','IMAP']],
+  [8,'ipconfig or ifconfig',['ipconfig','ifconfig']]
+];
+let migratedNetworkingCards=false;
+for(const [module,oldTerm,newTerms] of renamedNetworkingCards){if(!saved.mastered.includes(`networking:${module}:${oldTerm}`))continue;for(const term of newTerms){const key=`networking:${module}:${term}`;if(!saved.mastered.includes(key)){saved.mastered.push(key);migratedNetworkingCards=true}}}
 let sidebarOpen=false;
 function persist(){try{localStorage.setItem(STORAGE,JSON.stringify(saved));return true}catch{return false}}
+if(migratedNetworkingCards)persist();
 function scoreRecord(id){const s=saved.scores[id];return typeof s==='number'?{best:s,last:s,attempts:1}:s||{best:null,last:null,attempts:0}}
 const cards=[...new Map(flashcards.map(c=>[`${c.module}:${c.term}`,c])).values()];
 const state={screen:'dashboard',course:'oop',module:1,lesson:0,deckModule:0,deckType:'terms',cardIndex:0,flipped:false,flashMode:'flip',orientation:'definition',flashFeedback:null,flashSession:null,flashResult:null,exam:null,result:null,highlightNotice:'',highlightMode:false,annotationOpen:false,manageCourseId:null};
@@ -53,7 +65,53 @@ const customCourse=id=>saved.customCourses.find(c=>c.id===id);
 const courseManageButtons=c=>`<button type="button" class="course-manage-button" data-edit-course="${esc(c.id)}" aria-label="Rename ${esc(c.name)}">Rename</button><button type="button" class="course-manage-button delete" data-delete-course="${esc(c.id)}" aria-label="Delete ${esc(c.name)}">Delete</button>`;
 function showCourseEditor(id){const course=customCourse(id);if(!course)return;state.manageCourseId=id;document.getElementById('edit-course-name').value=course.name;document.getElementById('edit-course-dialog').showModal()}
 function showCourseDelete(id){const course=customCourse(id);if(!course)return;state.manageCourseId=id;document.getElementById('delete-course-name').textContent=course.name;document.getElementById('delete-course-dialog').showModal()}
-const networkingCards=[...new Map(networkingData.modules.flatMap(m=>m.topics.flatMap(t=>t.points.map(([term,definition])=>({module:m.id,term,definition})))).map(c=>[`${c.module}:${c.term}`,c])).values()];
+const networkingCards=[...new Map(networkingData.modules.flatMap(m=>m.topics.flatMap(t=>[
+  ...t.points.map(([term,definition])=>({module:m.id,term,definition})),
+  ...(t.model?.layers||[]).map(([number,name,job])=>({module:m.id,term:`OSI Layer ${number}: ${name}`,definition:job}))
+])).map(c=>[`${c.module}:${c.term}`,c])).values()];
+const legacyNetworkHighlightMap={
+  '1:0':{0:[[0,1],1],1:[[2],0],2:[[3],0],3:[[4],0],4:[[5],0]},
+  '1:1':{0:[[0],1],1:[[1],1],4:[[4,5],1]},'1:2':{4:[[4,5],1]},
+  '2:0':{0:[[0,1],1],1:[[3,4],1],2:[[5],1],3:[[6],1],4:[[7,8,9],1]},
+  '2:1':{0:[[0],1],1:[[1],1],2:[[2],1],4:[[4],1]},
+  '2:2':{0:[[0],1],3:[[3],1],4:[[4],1]},'2:3':{1:[[1],1],2:[[2],1],3:[[3],1]},
+  '3:0':{2:[[2,3],1],3:[[4],0],4:[[5,6,7],1],5:[[8,9,10],1]},
+  '3:2':{1:[[1],1],2:[[2],1],3:[[3],1],4:[[4,5],1],5:[[6],1]},'3:3':{0:[[0],1]},
+  '4:0':{1:[[1],1],4:[[4,5],1],5:[[6],1]},
+  '4:2':{0:[[0],1],1:[[1],1],2:[[2,3],1],3:[[4],1],4:[[5,6],1],5:[[7],0]},
+  '5:0':{0:[[0],1]},'5:1':{5:[[5],1]},'6:0':{0:[[0],1]},
+  '6:2':{0:[[0],1],1:[[1],1],2:[[2],1],3:[[3],1],4:[[4],1]},'6:3':{0:[[0],1],1:[[1],1]},
+  '7:0':{0:[[0],1],1:[[1],1],3:[[3],1]},
+  '7:1':{0:[[0],1],1:[[4],0],2:[[5],0],3:[[6],0],4:[[7],0],5:[[8],0]},
+  '7:2':{2:[[2],1],3:[[3],1],4:[[4,5,6,7],1]},
+  '7:3':{0:[[0],1],1:[[1],1],2:[[2],1],3:[[3,4],1],4:[[5],1],5:[[6],1]},
+  '8:2':{2:[[2],1],3:[[3],1]},'8:3':{1:[[1],1],2:[[2],1],5:[[5,6],1]}
+};
+function migrateNetworkHighlights(){
+  if(saved.networkNoteHighlightVersion===2)return;
+  const originals={...saved.highlights},idMap={},transfers=[];
+  for(const [key,ranges] of Object.entries(originals)){
+    const match=/^networking-m(\d+)-l(\d+)-definition-(\d+)$/.exec(key);
+    if(!match||!Array.isArray(ranges))continue;
+    const [,module,lesson,index]=match,change=legacyNetworkHighlightMap[`${module}:${lesson}`]?.[index];
+    if(!change)continue;
+    const [targets,full]=change,prefix=`networking-m${module}-l${lesson}-definition-`;
+    idMap[key]=targets.map(target=>prefix+target);
+    transfers.push({key,ranges,module,lesson,targets,full,prefix});
+  }
+  for(const {key} of transfers)delete saved.highlights[key];
+  for(const {ranges,module,lesson,targets,full,prefix} of transfers){
+    for(const target of targets){
+      const id=prefix+target,definition=networkingData.modules[Number(module)-1]?.topics[Number(lesson)]?.points[target]?.[1];
+      if(!definition)continue;
+      const moved=ranges.map(range=>full?[0,definition.length,range[2]]:range);
+      saved.highlights[id]=[...(saved.highlights[id]||[]),...moved];
+    }
+  }
+  saved.highlightHistory=(Array.isArray(saved.highlightHistory)?saved.highlightHistory:[]).flatMap(id=>idMap[id]||[id]);
+  saved.networkNoteHighlightVersion=2;persist();
+}
+migrateNetworkHighlights();
 const courseFor=id=>id==='networking'?networkingData:courseData;
 const activeCourse=()=>courseFor(state.course);
 const activeCards=()=>state.course==='networking'?networkingCards:cards;
@@ -109,7 +167,9 @@ function highlightHTML(value,id){
 }
 function noteText(value,id){return `<p data-highlight-block="${esc(id)}">${highlightHTML(value,id)}</p>`}
 function noteExample(value,id){const code=state.course==='oop'&&(/[{}=]/.test(value)||/\b(?:new|public|static|interface|synchronized)\b/.test(value)||/;\s*[A-Z][A-Za-z]*\s*</.test(value)||/\.\w+\(/.test(value));return code?`<pre class="note-code" data-highlight-block="${esc(id)}"><code>${highlightHTML(value,id)}</code></pre>`:noteText(value,id)}
-function noteReferenceTable(table){if(!table)return '';return `<section class="note-section reference-section"><h2>${esc(table.title)}</h2><p class="reference-intro">${esc(table.note)}</p><div class="prefix-table-scroll" role="region" aria-label="${esc(table.title)}" tabindex="0"><table class="prefix-table"><thead><tr><th scope="col">Prefix length</th><th scope="col">Subnet mask</th><th scope="col">32-bit mask (binary)</th></tr></thead><tbody>${table.rows.map(([prefix,mask,binary])=>`<tr><th scope="row">${esc(prefix)}</th><td>${esc(mask)}</td><td class="binary-mask">${esc(binary)}</td></tr>`).join('')}</tbody></table></div></section>`}
+function noteReferenceTable(table,prefix){if(!table)return '';return `<section class="note-section reference-section"><h2>${esc(table.title)}</h2><p class="reference-intro">${esc(table.note)}</p><div class="prefix-table-scroll" role="region" aria-label="${esc(table.title)}" tabindex="0"><table class="prefix-table"><thead><tr><th scope="col">Prefix length</th><th scope="col">Subnet mask</th><th scope="col">32-bit mask (binary)</th></tr></thead><tbody>${table.rows.map(([length,mask,binary],i)=>`<tr><th scope="row" data-highlight-block="${esc(prefix+'table-'+i+'-length')}">${highlightHTML(length,prefix+'table-'+i+'-length')}</th><td data-highlight-block="${esc(prefix+'table-'+i+'-mask')}">${highlightHTML(mask,prefix+'table-'+i+'-mask')}</td><td class="binary-mask" data-highlight-block="${esc(prefix+'table-'+i+'-binary')}">${highlightHTML(binary,prefix+'table-'+i+'-binary')}</td></tr>`).join('')}</tbody></table></div></section>`}
+function noteDefinitions(points,prefix){let previous='';return `<div class="note-definition-list">${points.map(([term,definition,category],i)=>{const heading=category&&category!==previous?`<h3 class="note-category">${esc(category)}</h3>`:'';previous=category||'';return `${heading}<div class="note-definition"><div class="note-term"><mark class="term-highlight">${esc(term)}</mark><span class="note-separator" aria-hidden="true">—</span></div>${noteText(definition,prefix+'definition-'+i)}</div>`}).join('')}</div>`}
+function noteModel(model,prefix){if(!model)return '';return `<section class="note-section model-section"><h2>OSI LAYERS · 1 TO 7</h2><p class="reference-intro">Open Systems Interconnection (OSI) separates network communication into seven jobs. Read upward from the signal on the medium to the service used by an application.</p><ol class="osi-layer-list">${model.layers.map(([number,name,job])=>`<li><span class="layer-number">${number}</span><strong><mark class="term-highlight">${esc(name)}</mark></strong><span data-highlight-block="${esc(prefix+'osi-'+number)}">${highlightHTML(job,prefix+'osi-'+number)}</span></li>`).join('')}</ol><h3 class="model-subheading">HOW TCP/IP GROUPS THESE LAYERS</h3><div class="model-map">${model.tcpIp.map(([name,job,match],i)=>`<div><strong>${esc(name)}</strong><span data-highlight-block="${esc(prefix+'tcpip-'+i)}">${highlightHTML(job,prefix+'tcpip-'+i)}</span><small>${esc(match)}</small></div>`).join('')}</div></section>`}
 function lessonPrefix(){return `${state.course==='networking'?'networking-':''}m${state.module}-l${state.lesson}-`}
 function countLessonHighlights(){return Object.entries(saved.highlights).filter(([key,ranges])=>key.startsWith(lessonPrefix())&&Array.isArray(ranges)).reduce((n,[,ranges])=>n+ranges.length,0)}
 function canUndoHighlight(){return saved.highlightHistory.some(id=>id.startsWith(lessonPrefix())&&saved.highlights[id]?.length)}
@@ -155,8 +215,9 @@ function lessonPage(){
   </div>${state.highlightNotice?`<p class="highlight-notice">${esc(state.highlightNotice)}</p>`:''}${state.annotationOpen?annotationPanel():''}
   <article class="lesson-paper note-sheet">
     <section class="note-section note-intro"><h2>QUICK IDEA</h2>${noteText(t.lead,prefix+(hasExplain?'lead':'explain'))}${hasExplain?noteText(t.explain,prefix+'explain'):''}</section>
-    <section class="note-section note-terms"><h2>KEY TERMS</h2><div class="note-definition-list">${t.points.map(([term,definition],i)=>`<div class="note-definition"><div class="note-term"><mark class="term-highlight">${esc(term)}</mark><span class="note-separator" aria-hidden="true">—</span></div>${noteText(definition,prefix+'definition-'+i)}</div>`).join('')}</div></section>
-    ${noteReferenceTable(t.table)}
+    ${noteModel(t.model,prefix)}
+    <section class="note-section note-terms"><h2>KEY TERMS</h2>${noteDefinitions(t.points,prefix)}</section>
+    ${noteReferenceTable(t.table,prefix)}
     ${t.example?`<section class="note-section note-example"><h2>EXAMPLE</h2>${noteExample(t.example,prefix+'example')}</section>`:''}
     ${t.tip?`<aside class="note-takeaway"><strong>REMEMBER</strong>${noteText(t.tip,prefix+'tip')}</aside>`:''}
     <div class="lesson-actions"><button class="button ${done?'soft':'solid'}" data-reviewed="${topicKey(m.id,state.lesson)}">${done?'Reviewed · click to undo':'Mark lesson reviewed'}</button><div class="lesson-stepper">${state.lesson>0?`<button class="button ghost" data-step-lesson="-1">← Previous</button>`:''}${state.lesson<m.topics.length-1?`<button class="button ghost" data-step-lesson="1">Next lesson →</button>`:''}</div></div>
