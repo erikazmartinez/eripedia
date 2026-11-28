@@ -270,3 +270,62 @@ body{font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;font-size:14px}
 :root[data-theme=dark] .shuffle-flash{background:#2c4756;border-color:#5b91a8;color:#e0f4fc}
 :root[data-theme=dark] .shuffle-flash.active{background:#36576a;border-color:#88c7e3}
 @media(max-width:560px){.shuffle-flash{width:100%}}
+/* Lesson pages as spaced study notes */
+.note-sheet{max-width:900px;padding-top:30px;padding-bottom:30px}
+.note-section{position:relative;margin:0 0 27px;padding:0 0 27px;border-bottom:1px solid var(--line)}
+.note-section h2,.note-takeaway strong{font-family:"Trebuchet MS",Arial,sans-serif;font-size:11px;font-weight:900;letter-spacing:.13em;line-height:1.4;color:#b46243;text-transform:uppercase;margin:0 0 13px}
+.note-intro p{font-size:15px;line-height:1.75;color:var(--ink);margin:0 0 10px;max-width:70ch}
+.note-intro p:last-child{margin-bottom:0}
+.note-definition-list{display:grid;gap:0}
+.note-definition{display:grid;grid-template-columns:minmax(145px,31%) minmax(0,1fr);align-items:start;gap:15px;padding:14px 3px;border-bottom:1px solid var(--line)}
+.note-definition:first-child{padding-top:4px}
+.note-definition:last-child{border-bottom:0;padding-bottom:0}
+.note-term{display:flex;align-items:flex-start;gap:10px;min-width:0;color:var(--ink);font-size:14px;line-height:1.6;font-weight:850}
+.term-highlight{background:#ffebb2;color:#46364b;border-radius:5px;padding:1px 5px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.note-separator{color:#bb8d72;font-weight:900}
+.note-definition p{font-size:14px;line-height:1.7;color:var(--ink);margin:0}
+.note-example p{font-size:14px;line-height:1.7;color:var(--ink);background:#eaf6fb;border-left:4px solid #93cde3;border-radius:0 11px 11px 0;padding:14px 18px;margin:0}
+.note-code{overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;padding:16px 18px;background:#edf6fa;border:1px solid #d4e8f0;border-radius:12px;color:#344858;font-size:13px;line-height:1.65}
+.note-takeaway{display:grid;gap:3px;background:#fff3d4;border:1px solid #f0dda8;border-radius:13px;padding:16px 18px;margin:0 0 26px}
+.note-takeaway strong{margin:0}
+.note-takeaway p{font-size:14px;line-height:1.65;color:var(--ink);margin:0}
+.reference-section h2{text-transform:none;letter-spacing:.02em;font-size:17px;color:var(--ink)}
+.reference-intro{font-size:13px;line-height:1.65;color:var(--muted);margin:0 0 14px;max-width:70ch}
+.prefix-table-scroll{width:100%;overflow-x:auto;border:1px solid #d8e4e8;border-radius:12px;background:var(--surface)}
+.prefix-table{width:100%;min-width:705px;border-collapse:collapse;font-size:13px;text-align:left}
+.prefix-table th,.prefix-table td{padding:11px 13px;border-bottom:1px solid var(--line)}
+.prefix-table thead th{background:#e5f3f9;color:#36566b;font-size:12px;font-weight:900;letter-spacing:.02em}
+.prefix-table tbody th{font-weight:900;color:var(--plum-deep)}
+.prefix-table tbody tr:nth-child(even){background:#f6fafb}
+.prefix-table tbody tr:last-child th,.prefix-table tbody tr:last-child td{border-bottom:0}
+.binary-mask{font-family:Consolas,"Courier New",monospace;font-size:12px;letter-spacing:-.02em;white-space:nowrap;color:var(--ink)}
+.highlight-toolbar .highlight-tool-buttons{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.highlight-toolbar .highlighter-switch span{color:inherit;font-size:11px;white-space:nowrap}
+.highlight-toolbar .highlight-palette{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.highlight-toolbar .highlight-palette>span{font-size:10px;font-weight:900;letter-spacing:.08em;color:var(--ink);margin-right:2px}
+.highlight-swatch{width:31px;height:31px;min-width:31px;min-height:31px;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #947e87;transition:transform .18s,box-shadow .18s}
+.highlight-swatch:hover{transform:translateY(-2px) scale(1.08)}
+.highlight-swatch.selected{box-shadow:0 0 0 3px #524154,0 0 0 5px #fff}
+.swatch-yellow{background:#ffe3a1}.swatch-blue{background:#bfe8f7}.swatch-pink{background:#f8ccdc}
+.saved-highlight.highlight-blue{background:#bfe8f7;color:#263e50}
+.saved-highlight.highlight-pink{background:#f8ccdc;color:#4b3042}
+.highlight-toolbar.is-on.color-blue{background:#e6f6fd;border-color:#83c5df;box-shadow:0 0 0 4px rgba(142,207,235,.25)}
+.highlight-toolbar.is-on.color-pink{background:#fff0f6;border-color:#e4a8c0;box-shadow:0 0 0 4px rgba(238,181,205,.25)}
+.is-on.color-blue .highlighter-switch{border-color:#78bad3;background:#f4fbff;color:#31566a}
+.is-on.color-pink .highlighter-switch{border-color:#d99eb8;background:#fff8fb;color:#67465b}
+.is-on.color-blue .highlighter-status{color:#31566a}
+.is-on.color-pink .highlighter-status{color:#67465b}
+:root[data-theme=dark] .term-highlight{background:#ad8845;color:#211b25}
+:root[data-theme=dark] .note-section h2,:root[data-theme=dark] .note-takeaway strong{color:#f0bfa8}
+:root[data-theme=dark] .note-example p,:root[data-theme=dark] .note-code{background:#304854;border-color:#547488;color:#f1f7f9}
+:root[data-theme=dark] .note-takeaway{background:#4a412f;border-color:#8d7749}
+:root[data-theme=dark] .prefix-table-scroll{border-color:#56717e}
+:root[data-theme=dark] .prefix-table thead th{background:#355567;color:#f1f9fc}
+:root[data-theme=dark] .prefix-table tbody tr:nth-child(even){background:#303b45}
+:root[data-theme=dark] .saved-highlight.highlight-blue{background:#639dba;color:#142832}
+:root[data-theme=dark] .saved-highlight.highlight-pink{background:#c789a5;color:#251b26}
+:root[data-theme=dark] .highlight-toolbar.is-on.color-blue{background:#304d5b;border-color:#7fb8d0}
+:root[data-theme=dark] .highlight-toolbar.is-on.color-pink{background:#523b4a;border-color:#d59ab7}
+:root[data-theme=dark] .is-on.color-blue .highlighter-status{color:#d9f4ff}
+:root[data-theme=dark] .is-on.color-pink .highlighter-status{color:#ffe5ef}
+@media(max-width:650px){.note-definition{grid-template-columns:1fr;gap:5px;padding:15px 2px}.note-sheet{padding-left:45px;padding-right:18px}.note-section{margin-bottom:23px;padding-bottom:23px}.highlight-toolbar .highlight-palette{margin:3px 0}.highlight-toolbar .highlight-palette>span{margin-right:6px}.prefix-table-scroll{margin-left:-3px;width:calc(100% + 3px)}}

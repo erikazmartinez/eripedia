@@ -1,4 +1,4 @@
-const netTopic=(title,lead,explain,points,example,tip)=>({title,lead,explain,points,example,tip});
+const netTopic=(title,lead,explain,points,example,tip,table)=>({title,lead,explain,points,example,tip,table});
 const networkingData={
   id:'networking',title:'Networking 1',short:'ITN',description:'Introduction to Networks · Modules 1–8',
   modules:[
@@ -132,7 +132,21 @@ const networkingData={
     {id:5,title:'IPv4 Addressing and Subnetting',source:'ITN Module 11 (your Module 5)',topics:[
       netTopic('Read an IPv4 address','An IPv4 address identifies a device on an IP network.','It has a network portion and a host portion. The subnet mask or prefix length marks the boundary between them.',[
         ['IPv4 address','A 32-bit address written as four decimal octets, such as 192.168.10.25.'],['Subnet mask','A pattern of network bits followed by host bits; 255.255.255.0 corresponds to /24.'],['Prefix length','The number of network bits, written after a slash, such as /24.'],['Network address','The address with all host bits set to zero.'],['Broadcast address','The address with all host bits set to one in an IPv4 subnet.'],['Usable host address','An address between the network and broadcast addresses that can be assigned to a host.']
-      ],'For 192.168.10.25/24, the network is 192.168.10.0, the broadcast is 192.168.10.255, and 192.168.10.25 is a usable host address.','Count network bits with the prefix; the rest are host bits.'),
+      ],'For 192.168.10.25/24, the network is 192.168.10.0, the broadcast is 192.168.10.255, and 192.168.10.25 is a usable host address.','Count network bits with the prefix; the rest are host bits.',{
+        title:'Prefix length quick reference',
+        note:'In the binary mask, each 1 belongs to the network portion; each 0 belongs to the host portion. The prefix counts the 1s.',
+        rows:[
+          ['/8','255.0.0.0','11111111.00000000.00000000.00000000'],
+          ['/16','255.255.0.0','11111111.11111111.00000000.00000000'],
+          ['/24','255.255.255.0','11111111.11111111.11111111.00000000'],
+          ['/25','255.255.255.128','11111111.11111111.11111111.10000000'],
+          ['/26','255.255.255.192','11111111.11111111.11111111.11000000'],
+          ['/27','255.255.255.224','11111111.11111111.11111111.11100000'],
+          ['/28','255.255.255.240','11111111.11111111.11111111.11110000'],
+          ['/29','255.255.255.248','11111111.11111111.11111111.11111000'],
+          ['/30','255.255.255.252','11111111.11111111.11111111.11111100']
+        ]
+      }),
       netTopic('IPv4 delivery and address ranges','How a packet is delivered depends on its destination.','One-to-one delivery uses unicast; one-to-everyone on the local subnet uses broadcast; one-to-a-group uses multicast.',[
         ['Unicast','A message from one sender to one destination.'],['Broadcast','An IPv4 message sent to all devices on the local broadcast domain.'],['Multicast','A message sent to devices that joined a particular group.'],['Private IPv4 address','An address from a reserved range used inside networks and not routed on the public internet.'],['Public IPv4 address','An address that can be routed across the public internet.'],['NAT','Translation between private and public addresses, commonly at a network edge.']
       ],'A home laptop might use a private 192.168.x.x address while its router translates traffic to a public address.','Broadcast is local; routers do not forward ordinary broadcasts.'),
